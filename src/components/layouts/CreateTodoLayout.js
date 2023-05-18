@@ -1,12 +1,13 @@
 import CreateContentBox from "../common/CreateContentBox";
 import TodoList from "../common/TodoList";
 
-export default function CreateTodo({ $target }) {
+export default function CreateTodo({ $target, onClickAddTodoItem }) {
   const $createTodo = document.createElement("div");
   $createTodo.classList.add("left");
 
   const createContentBox = new CreateContentBox({
     $target: $createTodo,
+    onClickAddTodoItem,
   });
 
   const todoList = new TodoList({

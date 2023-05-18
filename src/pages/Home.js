@@ -2,7 +2,7 @@ import MainTitle from "../components/common/MainTitle.js";
 import TodoWrap from "../components/layouts/TodoWrap.js";
 export default function HomePage({
   $target,
-  onClickListItemAdd,
+  onClickAddTodoItem,
   onClickViewAllFolderOpen,
 }) {
   const $page = document.createElement("div");
@@ -15,6 +15,7 @@ export default function HomePage({
 
   const todoWrap = new TodoWrap({
     $target: $page,
+    onClickAddTodoItem,
   });
 
   this.setState = () => {
