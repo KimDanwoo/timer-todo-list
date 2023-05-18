@@ -1,12 +1,11 @@
-import HomePage from "./HomePage";
+import Home from "./pages/Home.js";
 
 export default function App({ $target }) {
-  const homePage = new HomePage({
+  $target.style = "max-height:100vh; overflow: auto;";
+
+  const home = new Home({
     $target,
-    onClickListItemAdd,
-    onClickViewAllFolderOpen,
   });
-  this.render = () => {
-    homePage.setState();
-  };
+
+  home.setState();
 }

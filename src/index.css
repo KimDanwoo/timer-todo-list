@@ -1,20 +1,97 @@
+* {
+  box-size: border-box;
+}
+
 html,
 body {
   height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
-section {
-  background: #eee;
+#page {
   max-width: 1280px;
   margin: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.title_wrap {
+  width: 100%;
+}
+
+.title_wrap h2 {
+  text-aligh: left;
 }
 
 .todo_wrap {
-  margin-top: 12px;
+  width: 100%;
   display: flex;
 }
 
 .todo_wrap > div {
   width: 50%;
-  padding: 24px;
+}
+
+.left,
+.right {
+  padding: 20px;
+
+  margin: 12px;
+}
+
+.left h3,
+.right h3 {
+  margin: 4px 12px;
+}
+ {
+  margin: 4px 12px;
+}
+
+.todo_list {
+  margin-top: 24px;
+  padding: 14px;
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+.create_todo_box {
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 18px;
+  margin-top: 12px;
+}
+
+.end_todo_box {
+  border: 1px solid;
+  padding: 14px;
+  margin-top: 12px;
+  border-radius: 5px;
+}
+
+.todo_item {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid;
+  margin: 12px 0;
+  padding: 2px 12px;
+  border-radius: 15px;
+}
+
+#button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 12px;
+}
+
+button {
+  padding: 6px 14px;
+  height: 40px;
 }
