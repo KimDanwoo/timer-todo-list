@@ -2,3 +2,19 @@ html,
 body {
   height: 100vh;
 }
+
+section {
+  background: #eee;
+  max-width: 1280px;
+  margin: auto;
+}
+
+.todo_wrap {
+  margin-top: 12px;
+  display: flex;
+}
+
+.todo_wrap > div {
+  width: 50%;
+  padding: 24px;
+}
