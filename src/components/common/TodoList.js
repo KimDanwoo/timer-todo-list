@@ -1,6 +1,6 @@
 import { getItem } from "../../utils/storage";
 import FilterControl from "./FilterControl";
-import SubTitle from "./SubTitle";
+import Heading from "./Heading";
 import TodoItem from "./TodoItem";
 import { store } from "../../store/index";
 import Button from "./Button";
@@ -14,28 +14,21 @@ export default function TodoList({ $target, initialState }) {
 
   this.state = initialState;
 
-  const list = getItem("todo");
+  // const list = getItem("todo");
 
   this.setState = (nextState) => {
     this.state = nextState;
     this.render();
   };
 
-  new SubTitle({
+  new Heading({
     $target: $todoList,
     title: "할 일 목록",
+    size: "h3",
   });
 
   new FilterControl({
     $target: $todoList,
-  });
-
-  list.map((item) => {
-    new TodoItem({
-      $target: $todoItems,
-      title: item.title,
-      time: item.time,
-    });
   });
 
   new TodoItem({
@@ -44,19 +37,16 @@ export default function TodoList({ $target, initialState }) {
     time: store.state.b,
   });
 
-  // new Button({
-
-  // })
-  // new TodoItem({
-  //   $target: $todoItems,
-  //   title: "할 일 내용 1",
-  //   time: 60,
-  // });
-  // new TodoItem({
-  //   $target: $todoItems,
-  //   title: "할 일 내용 1",
-  //   time: 60,
-  // });
+  new TodoItem({
+    $target: $todoItems,
+    title: "할 일 내용 1",
+    time: 60,
+  });
+  new TodoItem({
+    $target: $todoItems,
+    title: "할 일 내용 1",
+    time: 60,
+  });
 
   this.render = () => {
     $todoList.append($todoItems);

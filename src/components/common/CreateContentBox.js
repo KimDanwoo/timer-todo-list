@@ -1,6 +1,6 @@
 import Button from "./Button";
 import CustomInput from "./CustomInput";
-import SubTitle from "./SubTitle";
+import Heading from "./Heading";
 
 export default function CreateContentBox({ $target, onClickAddTodoItem }) {
   const $div = document.createElement("div");
@@ -15,9 +15,10 @@ export default function CreateContentBox({ $target, onClickAddTodoItem }) {
     todoItem[name] = value;
   };
 
-  const createSubTitle = new SubTitle({
+  const createSubTitle = new Heading({
     $target: $target,
     title: "할 일 만들기",
+    size: "h3",
   });
 
   const writeInput = new CustomInput({

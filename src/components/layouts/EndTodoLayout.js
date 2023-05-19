@@ -1,13 +1,14 @@
 import EndTodoList from "../common/EndTodoList";
-import SubTitle from "../common/SubTitle";
+import Heading from "../common/Heading";
 
 export default function EndTodo({ $target }) {
   const $endTodo = document.createElement("div");
   $endTodo.classList.add("right");
 
-  const subTitle = new SubTitle({
+  const subTitle = new Heading({
     $target: $endTodo,
     title: "종료된 할 일",
+    size: "h3",
   });
 
   const endTodoList = new EndTodoList({
