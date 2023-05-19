@@ -10,6 +10,15 @@ export default function App({ $target }) {
   const $todoWrap = document.createElement("div");
   $todoWrap.classList.add("todo_wrap");
 
+  this.state = [
+    { id: 1, title: "빨래 하기", time: 60, createAt: 1, idEnd: false },
+    { id: 2, title: "빨래 하기", time: 60, createAt: 1, idEnd: false },
+    { id: 3, title: "빨래 하기", time: 60, createAt: 1, idEnd: true },
+    { id: 4, title: "빨래 하기", time: 60, createAt: 1, idEnd: false },
+    { id: 5, title: "빨래 하기", time: 60, createAt: 1, idEnd: true },
+    { id: 6, title: "빨래 하기", time: 60, createAt: 1, idEnd: false },
+  ];
+
   const onClickAddTodoItem = (payload) => {
     const getTodos = getItem("todo", []);
     const newPayload = { ...payload, date: Date.now() };
@@ -26,10 +35,12 @@ export default function App({ $target }) {
 
   const createTodoLayout = new CreateTodoLayout({
     $target: $todoWrap,
+    initialState: this.state,
     onClickAddTodoItem,
   });
   const endTodoLayout = new EndTodoLayout({
     $target: $todoWrap,
+    initialState: this.state,
   });
 
   this.render = () => {

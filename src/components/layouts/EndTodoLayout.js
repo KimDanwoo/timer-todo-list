@@ -1,5 +1,5 @@
-import EndTodoList from "../common/EndTodoList";
 import Heading from "../common/Heading";
+import EndTodoList from "../common/EndTodoList";
 
 export default function EndTodo({ $target }) {
   const $endTodo = document.createElement("div");

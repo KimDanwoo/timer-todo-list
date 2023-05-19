@@ -1,9 +1,5 @@
-import { getItem } from "../../utils/storage";
-import FilterControl from "./FilterControl";
-import Heading from "./Heading";
 import TodoItem from "./TodoItem";
 import { store } from "../../store/index";
-import Button from "./Button";
 
 export default function TodoList({ $target, initialState }) {
   const $todoList = document.createElement("div");
@@ -14,22 +10,10 @@ export default function TodoList({ $target, initialState }) {
 
   this.state = initialState;
 
-  // const list = getItem("todo");
-
   this.setState = (nextState) => {
     this.state = nextState;
     this.render();
   };
-
-  new Heading({
-    $target: $todoList,
-    title: "할 일 목록",
-    size: "h3",
-  });
-
-  new FilterControl({
-    $target: $todoList,
-  });
 
   new TodoItem({
     $target: $todoItems,
@@ -50,6 +34,11 @@ export default function TodoList({ $target, initialState }) {
 
   this.render = () => {
     $todoList.append($todoItems);
+    // $todoList.innerHTML = `
+    // <ul>
+    // ${this.state.map((item) => `<li>${item}</li>`)}
+    //   </ul>
+    // `;
     $target.append($todoList);
   };
 

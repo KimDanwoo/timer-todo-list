@@ -37,11 +37,8 @@ body {
   width: 50%;
 }
 
-.left,
 .right {
   padding: 20px;
-
-  margin: 12px;
 }
 
 .left h3,
