@@ -14,7 +14,7 @@ export default function Heading({
 
   this.render = () => {
     $mainTitle.appendChild($heading);
-    $target.prepend($mainTitle);
+    $target.append($mainTitle);
   };
   this.render();
 }

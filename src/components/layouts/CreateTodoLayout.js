@@ -1,6 +1,5 @@
 import CreateContentBox from "../common/CreateContentBox";
 import FilterControl from "../common/FilterControl";
-import Heading from "../common/Heading";
 import TodoList from "../common/TodoList";
 
 export default function CreateTodo({
@@ -8,7 +7,6 @@ export default function CreateTodo({
   initialState,
   onClickAddTodoItem,
 }) {
-  const $container = document.createElement("div");
   const $createContainer = document.createElement("div");
   const $createTodo = document.createElement("div");
   $createTodo.classList.add("left");
@@ -16,14 +14,8 @@ export default function CreateTodo({
   this.state = initialState;
 
   const createContentBox = new CreateContentBox({
-    $target: $createContainer,
-    onClickAddTodoItem,
-  });
-
-  new Heading({
     $target: $createTodo,
-    title: "할 일 목록",
-    size: "h3",
+    onClickAddTodoItem,
   });
 
   new FilterControl({
@@ -32,7 +24,7 @@ export default function CreateTodo({
 
   const todoList = new TodoList({
     $target: $createTodo,
-    initialState: this.state,
+    initialState: this.state.filter(({ isEnd }) => !isEnd),
   });
 
   this.setState = () => {
@@ -40,11 +32,9 @@ export default function CreateTodo({
   };
 
   this.render = () => {
-    createContentBox.render();
+    $createContainer.append(createContentBox);
     todoList.render();
-    $container.append($createContainer);
-    $container.append($createTodo);
-    $target.append($container);
+    $target.append($createTodo);
   };
 
   this.render();

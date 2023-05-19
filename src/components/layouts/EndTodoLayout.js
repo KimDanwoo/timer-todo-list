@@ -1,9 +1,10 @@
 import Heading from "../common/Heading";
-import EndTodoList from "../common/EndTodoList";
+import TodoList from "../common/TodoList";
 
-export default function EndTodo({ $target }) {
+export default function EndTodo({ $target, initialState }) {
   const $endTodo = document.createElement("div");
   $endTodo.classList.add("right");
+  this.state = initialState;
 
   const subTitle = new Heading({
     $target: $endTodo,
@@ -11,8 +12,9 @@ export default function EndTodo({ $target }) {
     size: "h3",
   });
 
-  const endTodoList = new EndTodoList({
+  const todoList = new TodoList({
     $target: $endTodo,
+    initialState: this.state.filter(({ isEnd }) => isEnd),
   });
 
   this.setState = () => {
@@ -20,7 +22,7 @@ export default function EndTodo({ $target }) {
   };
   this.render = () => {
     subTitle.render();
-    endTodoList.render();
+    todoList.render();
     $target.append($endTodo);
   };
   this.render();

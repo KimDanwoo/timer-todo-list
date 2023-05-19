@@ -11,12 +11,12 @@ export default function App({ $target }) {
   $todoWrap.classList.add("todo_wrap");
 
   this.state = [
-    { id: 1, title: "빨래 하기", time: 60, createAt: 1, idEnd: false },
-    { id: 2, title: "빨래 하기", time: 60, createAt: 1, idEnd: false },
-    { id: 3, title: "빨래 하기", time: 60, createAt: 1, idEnd: true },
-    { id: 4, title: "빨래 하기", time: 60, createAt: 1, idEnd: false },
-    { id: 5, title: "빨래 하기", time: 60, createAt: 1, idEnd: true },
-    { id: 6, title: "빨래 하기", time: 60, createAt: 1, idEnd: false },
+    { id: 1, title: "빨래 하기", time: 60, createAt: 1, isEnd: false },
+    { id: 2, title: "청소 하기", time: 50, createAt: 2, isEnd: false },
+    { id: 3, title: "노래 하기", time: 20, createAt: 3, isEnd: true },
+    { id: 4, title: "공부 하기", time: 60, createAt: 4, isEnd: false },
+    { id: 5, title: "코딩 하기", time: 20, createAt: 5, isEnd: true },
+    { id: 6, title: "저녁 하기", time: 15, createAt: 6, isEnd: false },
   ];
 
   const onClickAddTodoItem = (payload) => {
@@ -28,7 +28,7 @@ export default function App({ $target }) {
   };
 
   const heading = new Heading({
-    $target: $main,
+    $target: $target,
     title: "밀리의 서재 사전 과제",
     size: "h2",
   });
@@ -44,11 +44,11 @@ export default function App({ $target }) {
   });
 
   this.render = () => {
-    $main.appendChild($todoWrap);
     heading.render();
+    // $main.appendChild($todoWrap);
     createTodoLayout.render();
     endTodoLayout.render();
-    $target.appendChild($main);
+    $target.appendChild($todoWrap);
   };
 
   this.render();
