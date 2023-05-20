@@ -1,30 +1,121 @@
 import Heading from "./components/common/Heading.js";
-import CreateTodoLayout from "./components/layouts/CreateTodoLayout.js";
-import EndTodoLayout from "./components/layouts/EndTodoLayout.js";
+import TodoListContainer from "./components/layouts/TodoListContainer.js";
+import DoneTodoContainer from "./components/layouts/DoneTodoContainer.js";
 import { getItem, setItem, removeItem } from "./utils/storage.js";
 
 export default function App({ $target }) {
+  this.state = getItem("store", {
+    todoList: [],
+    sortType: "입력한 순",
+    input: {
+      title: "",
+      time: 0,
+    },
+    checkedTodoList: [],
+  });
+
+  this.setState = (nextState) => {
+    this.state = nextState;
+    this.render();
+  };
+
   $target.style = "max-height:100vh; overflow: auto;";
   const $main = document.createElement("section");
   $main.id = "page";
   const $todoWrap = document.createElement("div");
   $todoWrap.classList.add("todo_wrap");
 
-  this.state = [
-    { id: 1, title: "빨래 하기", time: 60, createAt: 1, isEnd: false },
-    { id: 2, title: "청소 하기", time: 50, createAt: 2, isEnd: false },
-    { id: 3, title: "노래 하기", time: 20, createAt: 3, isEnd: true },
-    { id: 4, title: "공부 하기", time: 60, createAt: 4, isEnd: false },
-    { id: 5, title: "코딩 하기", time: 20, createAt: 5, isEnd: true },
-    { id: 6, title: "저녁 하기", time: 15, createAt: 6, isEnd: false },
-  ];
+  const handleClickAddTodo = () => {
+    const uuid = self.crypto.randomUUID();
+    const newPayload = {
+      ...this.state.input,
+      date: Date.now(),
+      id: uuid,
+      isEnd: false,
+    };
+    const todoList = newPayload;
+    this.state.todoList.unshift(todoList);
+    this.setState({
+      ...this.state,
+      input: { title: "", time: 0 },
+    });
+    setItem("store", this.state);
+  };
 
-  const onClickAddTodoItem = (payload) => {
-    const getTodos = getItem("todo", []);
-    const newPayload = { ...payload, date: Date.now() };
-    console.log(getTodos);
-    const todos = [...getTodos, newPayload];
-    setItem("todo", todos);
+  const handleChangeTodoInput = ({ target: { name, value } }) => {
+    const newState = {
+      ...this.state,
+      input: { ...this.state.input, [name]: value },
+    };
+    this.setState(newState);
+  };
+
+  const handleClickFilterIndex = () => {
+    const sortItem = this.state.todoList.sort((a, b) => a.date - b.date);
+    console.log(sortItem);
+    const newState = {
+      ...this.state,
+      todoList: sortItem,
+      sortType: "입력한 순",
+    };
+    this.setState(newState);
+    setItem("store", this.state);
+  };
+
+  const handleClickFilterLimitTime = () => {
+    const sortItem = this.state.todoList.sort(
+      (a, b) => Number(a.time) - Number(b.time)
+    );
+    const newState = {
+      ...this.state,
+      todoList: sortItem,
+      sortType: "남은 시간 순",
+    };
+    this.setState(newState);
+    setItem("store", this.state);
+  };
+
+  const handleClickAllDone = () => {
+    const filter = this.state.todoList.map((todo) => ({
+      ...todo,
+      isEnd: true,
+    }));
+    const newState = {
+      ...this.state,
+      todoList: filter,
+    };
+    this.setState(newState);
+    setItem("store", this.state);
+  };
+
+  const handleClickCheckListDone = () => {
+    const filter = this.state.todoList.map((todo) => ({
+      ...todo,
+      isEnd: this.state.checkedTodoList.includes(todo.id),
+    }));
+    const newState = {
+      ...this.state,
+      todoList: filter,
+    };
+    this.setState(newState);
+    setItem("store", this.state);
+  };
+
+  const handleClickCheckList = ({ target }) => {
+    const { id, checked } = target;
+    if (checked) {
+      const checkedTodo = this.state.todoList.find((todo) => todo.id === id);
+      const tempList = [...this.state.checkedTodoList, checkedTodo.id];
+      const checkedTodoList = Array.from(new Set(tempList));
+      this.state.checkedTodoList = checkedTodoList;
+    } else {
+      const todoIndex = this.state.checkedTodoList.findIndex(
+        (uuid) => uuid === id
+      );
+      this.state.checkedTodoList.splice(todoIndex, 1);
+    }
+    this.setState(this.state);
+    setItem("store", this.state);
   };
 
   const heading = new Heading({
@@ -33,22 +124,27 @@ export default function App({ $target }) {
     size: "h2",
   });
 
-  const createTodoLayout = new CreateTodoLayout({
+  const todoListContainer = new TodoListContainer({
     $target: $todoWrap,
     initialState: this.state,
-    onClickAddTodoItem,
+    handleClickAddTodo,
+    handleChangeTodoInput,
+    handleClickFilterLimitTime,
+    handleClickFilterIndex,
+    handleClickAllDone,
+    handleClickCheckList,
+    handleClickCheckListDone,
   });
-  const endTodoLayout = new EndTodoLayout({
+  const doneTodoContainer = new DoneTodoContainer({
     $target: $todoWrap,
     initialState: this.state,
   });
 
   this.render = () => {
     heading.render();
-    // $main.appendChild($todoWrap);
-    createTodoLayout.render();
-    endTodoLayout.render();
     $target.appendChild($todoWrap);
+    todoListContainer.setState(this.state);
+    doneTodoContainer.setState(this.state);
   };
 
   this.render();

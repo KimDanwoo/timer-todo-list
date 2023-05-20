@@ -2,12 +2,11 @@ export default function Button({
   $target,
   initialState = {
     text: "",
+    sortType,
   },
+  type = "button",
   onClick = () => {},
 }) {
-  const $buttonContainer = document.createElement("div");
-  $buttonContainer.id = "button";
-
   this.state = initialState;
 
   this.setState = (nextState) => {
@@ -15,24 +14,29 @@ export default function Button({
 
     this.render();
   };
+  const $buttonContainer = document.createElement("button");
+  $buttonContainer.id = "button";
+  $buttonContainer.type = type;
 
   this.render = () => {
-    const { text } = this.state;
+    const { text, sortType } = this.state;
+
     $buttonContainer.innerHTML = /*html*/ `
-    <button style="flex: 1">
-    <span >
-    ${text}
-    </span>
-    </button>
- `;
+      <span >
+        ${text}
+      </span>
+    `;
+    if (sortType === text) {
+      $buttonContainer.classList.add("active");
+    } else {
+      $buttonContainer.classList.remove("active");
+    }
     $target.appendChild($buttonContainer);
   };
 
   $buttonContainer.addEventListener("click", (e) => {
-    const $button = e.target.closest("button");
-    if ($button) {
-      onClick();
-    }
+    e.preventDefault();
+    onClick();
   });
 
   this.render();

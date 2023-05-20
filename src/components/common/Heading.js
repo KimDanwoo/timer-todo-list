@@ -3,9 +3,7 @@ export default function Heading({
   title = "밀리의 서재 사전 과제",
   size,
 }) {
-  const $mainTitle = document.createElement("div");
   const $heading = document.createElement(size);
-  $mainTitle.classList.add("title_wrap");
   $heading.textContent = title;
 
   this.setState = () => {
@@ -13,8 +11,7 @@ export default function Heading({
   };
 
   this.render = () => {
-    $mainTitle.appendChild($heading);
-    $target.append($mainTitle);
+    $target.append($heading);
   };
   this.render();
 }

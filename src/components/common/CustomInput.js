@@ -1,22 +1,36 @@
-export default function CustomInput({ $target, title, name, onChange }) {
-  const $div = document.createElement("div");
-  const $heading = document.createElement("p");
-  const $input = document.createElement("input");
-  $input.classList.add('form_control')
-  $heading.textContent = title;
-  $input.name = name;
+export default function CustomInput({ $target, title, name, value, onChange }) {
+  this.state = { name, value };
 
-  this.setState = () => {
+  this.setState = (nextState) => {
+    this.state = nextState;
     this.render();
   };
+
+  const $div = document.createElement("div");
+  const $label = document.createElement("label");
+  const $inner = document.createElement("div");
+  const $inputContainer = document.createElement("div");
+  const $input = document.createElement("input");
+  const $span = document.createElement("span");
+  $div.classList.add("input_container");
+  $inner.classList.add("inner");
+  $inputContainer.classList.add("input");
+  $div.append($label);
+  $label.append($inner);
+  $inner.append($inputContainer);
+  $inputContainer.append($span);
+  $input.name = name;
+  $input.value = value;
+  $span.innerHTML = `${title}*`;
+  $input.placeholder = `${title}을 입력해주세요`;
+
   this.render = () => {
-    $div.append($heading);
-    $div.append($input);
+    $inputContainer.append($input);
     $target.append($div);
   };
 
   $input.addEventListener("change", (e) => {
-    onChange(e.target);
+    onChange(e);
   });
   this.render();
 }

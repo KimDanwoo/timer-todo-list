@@ -5,9 +5,9 @@ module.exports = (env, argv) => {
   const isProduction = argv.mode === "production";
   return {
     mode: argv.mode,
-    entry: "./src/index.js",
+    entry: "./src/main.js",
     output: {
-      filename: "index.js",
+      filename: "main.js",
       path: path.resolve(__dirname, "dist"),
       filename: isProduction ? "main.js" : "main.js",
       library: "MyLibrary",

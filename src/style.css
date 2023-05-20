@@ -1,0 +1,193 @@
+@charset "UTF-8";
+
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+html,
+body {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+main {
+  max-width: 1280px;
+  margin: auto;
+  padding-top: 92px;
+  height: 100%;
+}
+
+#page {
+  max-width: 1280px;
+  margin: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+.todo_wrap {
+  width: 100%;
+  display: flex;
+}
+
+.left,
+.right {
+  width: 50%;
+  padding: 20px;
+}
+
+.right {
+  min-height: 576px;
+}
+
+.left h3,
+.right h3 {
+  margin: 4px 12px;
+}
+
+.todo_list {
+  padding: 12px;
+  margin: 0;
+}
+
+.no_list {
+  position: relative;
+  height: 100%;
+}
+.no_title {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.form_container form {
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid rgb(39, 39, 39);
+  border-radius: 5px;
+  padding: 18px;
+}
+
+.filter_control {
+  padding: 26px 12px 12px;
+}
+
+.filter_control h3 {
+  margin-left: 0;
+}
+
+.filter_buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter_buttons > div {
+  display: flex;
+}
+
+.todo_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid;
+  margin: 12px 0;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+#button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 12px;
+}
+
+button {
+  padding: 8px 17px;
+  height: 35px;
+  border-radius: 45px;
+  background: #333333;
+  color: white;
+  border: 1px solid #333333;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: white;
+  color: #575757;
+}
+
+.form_control {
+  padding: 6px 12px;
+  margin: 8px 0;
+}
+
+button > span {
+  white-space: nowrap;
+}
+
+button.active {
+  background-color: #fef08c;
+  color: #242424;
+}
+
+.input_container {
+  border: 1px solid rgb(197, 197, 197);
+  height: 100%;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+}
+
+.input span {
+  font-size: 10px;
+  margin-bottom: 6px;
+}
+
+.input input {
+  outline: none;
+  border: none;
+}
+
+.input input::placeholder {
+  color: #b9b9b9;
+  font-size: 12px;
+}
+
+article.unfinished,
+article.done {
+  height: 100%;
+  overflow-y: scroll;
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+article.unfinished {
+  max-height: 344px;
+}
+
+article.done {
+  max-height: 536px;
+}
