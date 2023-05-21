@@ -29,7 +29,8 @@ export default function DoneTodoContainer({ $target, initialState }) {
     subTitle.render();
     todoList.render();
     todoList.setState({
-      todoList: this.state.todoList.filter(({ isEnd }) => isEnd),
+      todoList: this.state.doneTodoList,
+      timers: this.state.timers,
     });
     $target.append($doneTodoContainer);
   };

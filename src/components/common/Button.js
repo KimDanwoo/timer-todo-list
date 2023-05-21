@@ -3,15 +3,16 @@ export default function Button({
   initialState = {
     text: "",
     sortType,
+    disabled,
   },
   type = "button",
   onClick = () => {},
+  disabled,
 }) {
   this.state = initialState;
 
   this.setState = (nextState) => {
     this.state = nextState;
-
     this.render();
   };
   const $buttonContainer = document.createElement("button");
@@ -20,6 +21,12 @@ export default function Button({
 
   this.render = () => {
     const { text, sortType } = this.state;
+    console.log(this.state.disabled);
+    if (this.state.disabled) {
+      $buttonContainer.disabled = "disabled";
+    } else {
+      $buttonContainer.disabled = false;
+    }
 
     $buttonContainer.innerHTML = /*html*/ `
       <span >

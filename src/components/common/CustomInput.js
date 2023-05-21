@@ -1,4 +1,11 @@
-export default function CustomInput({ $target, title, name, value, onChange }) {
+export default function CustomInput({
+  $target,
+  title,
+  name,
+  value,
+  type,
+  onChange,
+}) {
   this.state = { name, value };
 
   this.setState = (nextState) => {
@@ -21,16 +28,21 @@ export default function CustomInput({ $target, title, name, value, onChange }) {
   $inputContainer.append($span);
   $input.name = name;
   $input.value = value;
+  $input.type = type;
   $span.innerHTML = `${title}*`;
   $input.placeholder = `${title}을 입력해주세요`;
 
   this.render = () => {
     $inputContainer.append($input);
     $target.append($div);
+    if (type === "text") {
+      $input.focus();
+    }
   };
 
   $input.addEventListener("change", (e) => {
     onChange(e);
   });
+
   this.render();
 }

@@ -148,6 +148,14 @@ button.active {
   color: #242424;
 }
 
+button:disabled {
+  background: #b9b9b9;
+  border: none;
+}
+button:disabled:hover {
+  color: white;
+}
+
 .input_container {
   border: 1px solid rgb(197, 197, 197);
   height: 100%;
@@ -190,4 +198,46 @@ article.unfinished {
 
 article.done {
   max-height: 536px;
+}
+
+#modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal_content {
+  position: absolute;
+  width: 300px;
+  height: 190px;
+  background: white;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.modal_header {
+  height: 5%;
+  width: 100%;
+}
+.modal_body {
+  height: 70%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  font-size: 14px;
+}
+.modal_footer {
+  height: 25%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 24px;
 }

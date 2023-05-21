@@ -12,11 +12,13 @@ export default function TodoListContainer({
   handleClickAllDone,
   handleClickCheckList,
   handleClickCheckListDone,
+  handleChangeOpenModal,
 }) {
   this.state = initialState;
 
   this.setState = (nextState) => {
     this.state = nextState;
+    console.log(nextState);
     this.render();
   };
   const $createContainer = document.createElement("div");
@@ -45,9 +47,11 @@ export default function TodoListContainer({
     initialState: {
       todoList: this.state.todoList.filter(({ isEnd }) => !isEnd),
       checkedTodoList: this.state.checkedTodoList,
+      timers: this.state.timers,
     },
     className: "unfinished",
     handleClickCheckList,
+    handleChangeOpenModal,
   });
 
   this.render = () => {
@@ -57,6 +61,7 @@ export default function TodoListContainer({
     todoList.setState({
       todoList: this.state.todoList.filter(({ isEnd }) => !isEnd),
       checkedTodoList: this.state.checkedTodoList,
+      timers: this.state.timers,
     });
   };
 

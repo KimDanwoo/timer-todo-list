@@ -21,8 +21,6 @@ export default function TodoForm({
   const handleSubmit = () => {
     handleClickAddTodo(this.state);
     this.setState({ title: "", time: 0 });
-    console.log("서브밋");
-    console.log($form);
     const $inputs = Array.from($form.querySelectorAll("input"));
     $inputs.forEach(($input) => {
       $input.value = null;
@@ -39,6 +37,7 @@ export default function TodoForm({
     $target: $form,
     title: "할 일",
     name: "title",
+    type: "text",
     value: this.state.input.title,
     onChange: handleChangeTodoInput,
   });
@@ -46,6 +45,7 @@ export default function TodoForm({
     $target: $form,
     title: "종료 시간(초)",
     name: "time",
+    type: "number",
     value: this.state.input.time,
     onChange: handleChangeTodoInput,
   });
@@ -60,7 +60,11 @@ export default function TodoForm({
   this.render = () => {
     writeInput.render();
     timerInput.render();
-    button.render();
+    const isDisabled = this.state.input?.time === 0 || !this.state.input?.title;
+    button.setState({
+      text: "추가",
+      disabled: isDisabled,
+    });
     $article.append($form);
     $target.append($article);
   };

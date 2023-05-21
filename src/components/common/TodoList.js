@@ -1,10 +1,16 @@
+import TodoItem from "./TodoItem";
+
 export default function TodoList({
   $target,
   initialState,
   className,
   handleClickCheckList,
+  handleChangeOpenModal,
 }) {
-  const $todoList = document.createElement("article");
+  const $article = document.createElement("article");
+  const $todoList = document.createElement("ul");
+  $article.classList.add(className);
+  $todoList.classList.add("todo_list");
   $todoList.classList.add(className);
   this.state = initialState;
 
@@ -15,7 +21,6 @@ export default function TodoList({
       const checkboxes = document.querySelectorAll(".todo-checkbox");
       checkboxes.forEach((checkbox, index) => {
         checkbox.addEventListener("click", (e) => {
-          console.log("nextState", nextState);
           handleClickCheckList(e);
           if (nextState.checkedTodoList.length) {
             e.target.checked = nextState.checkedTodoList.includes(e.target.id);
@@ -28,47 +33,26 @@ export default function TodoList({
   this.render = () => {
     const nullClass =
       className === "done" ? "할일을 마무리해보세요!" : `할일을 만들어보세요!`;
-
-    console.log(this.state.checkedTodoList);
     if (this.state.todoList.length) {
-      $todoList.innerHTML = `
-        <ul class="todo_list ${className}">
-        ${this.state.todoList
-          .map(
-            (item, id) => `
-            <li class="todo_item">
-              ${
-                item.isEnd
-                  ? ""
-                  : `<input 
-                    class="todo-checkbox"
-                    type="checkbox"
-                    ${
-                      this.state.checkedTodoList?.includes(item.id)
-                        ? "checked"
-                        : ""
-                    }
-                    id="${item.id}"/>
-                  `
-              }
-              <p>${item.title}</p>
-              <p>${item.time}</p>
-              ${item.isEnd ? "" : `<button type="button">삭제</button>`}
-            </li>`
-          )
-          .join("")}
-        </ul>
-      `;
+      const inner = this.state.todoList
+        ?.map(
+          (todo) =>
+            new TodoItem({
+              initialState: { item: todo },
+              startTime: className !== "done" ? this.state.timers[todo?.id] : 0,
+              handleChangeOpenModal,
+            }).outerHTML
+        )
+        .join("");
+      $todoList.innerHTML = inner;
     } else {
+      $todoList.classList.add("no_list");
       $todoList.innerHTML = `
-      <ul class="todo_list no_list ${className}">
-      <h4 class="no_title">${nullClass}
-      </h4 >
-      </ul>
-    `;
+        <h4 class="no_title">${nullClass}</h4 >
+      `;
     }
-    $target.append($todoList);
+    $article.append($todoList);
+    $target.append($article);
   };
-
   this.render();
 }
