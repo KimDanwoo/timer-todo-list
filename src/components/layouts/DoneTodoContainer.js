@@ -31,6 +31,8 @@ export default function DoneTodoContainer({ $target, initialState }) {
     todoList.setState({
       todoList: this.state.doneTodoList,
       timers: this.state.timers,
+      items: [],
+      todoItems: {},
     });
     $target.append($doneTodoContainer);
   };

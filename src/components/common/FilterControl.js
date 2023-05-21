@@ -48,6 +48,7 @@ export default function FilterControl({
     type: "button",
     onClick: handleClickAllDone,
   });
+
   const selectDoneTodo = new Button({
     $target: $rightBox,
     initialState: { text: "선택 종료" },
@@ -67,6 +68,7 @@ export default function FilterControl({
       text: "남은 시간 순",
       sortType: this.state.sortType,
     });
+    console.log(this.state.disabled);
     selectDoneTodo.setState({
       text: "선택 종료",
       disabled: this.state.disabled,

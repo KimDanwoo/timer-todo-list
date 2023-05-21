@@ -4,7 +4,6 @@ export default function TodoItem({
   handleChangeOpenModal,
 }) {
   const $todoItem = document.createElement("li");
-
   const $timerSpan = document.createElement("span");
   const $doneSpan = document.createElement("span");
   $todoItem.classList.add("todo_item");
@@ -15,18 +14,30 @@ export default function TodoItem({
   $todoItem.setAttribute("data-parent", `${item.id}`);
   this.timerId = null;
 
+  this.setState = (newState) => {
+    this.state = newState;
+    const { item } = this.state;
+
+    // Check if the item has been deleted
+    if (!item) {
+      this.resetTimer();
+    }
+    this.render();
+  };
+
   function updateCountdown(timerId) {
     const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
     let timeLeft = item.time - elapsedTime;
+    const $actualTimerSpan = document.querySelector(`[data-id='${item.id}']`);
+    const doneList = document.querySelector(".no_list");
     if (timeLeft > 0) {
-      const $actualTimerSpan = document.querySelector(`[data-id='${item.id}']`);
       if ($actualTimerSpan) {
         $actualTimerSpan.innerText = `${timeLeft}`;
       }
     }
     if (timeLeft <= 5) {
       const $li = document.querySelector(`[data-parent='${item.id}']`);
-      $li.classList.add("active");
+      $li.classList?.add("active");
     }
     if (timeLeft === 0 && elapsedTime >= item.time) {
       console.log(item);

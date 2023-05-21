@@ -57,9 +57,12 @@ export default function TodoListContainer({
   this.render = () => {
     $target.append($createTodo);
     todoForm.setState(this.state);
+    console.log("this.state.todoList", this.state.todoList);
     const isDisabled = this.state.todoList.length
       ? this.state.todoList.some((item) => !item.checked)
       : true;
+
+    console.log(isDisabled);
     filterControl.setState({
       sortType: this.state.sortType,
       disabled: isDisabled,
@@ -68,6 +71,8 @@ export default function TodoListContainer({
       todoList: this.state.todoList.filter(({ isEnd }) => !isEnd),
       checkedTodoList: this.state.checkedTodoList,
       timers: this.state.timers,
+      items: [],
+      todoItems: {},
     });
   };
 
