@@ -4,6 +4,7 @@ export default function TodoItem({
   handleChangeOpenModal,
 }) {
   const $todoItem = document.createElement("li");
+
   const $timerSpan = document.createElement("span");
   const $doneSpan = document.createElement("span");
   $todoItem.classList.add("todo_item");
@@ -11,6 +12,7 @@ export default function TodoItem({
   const { item } = this.state;
   $timerSpan.setAttribute("data-time", item.time);
   $timerSpan.setAttribute("data-id", item.id);
+  $todoItem.setAttribute("data-parent", `${item.id}`);
   this.timerId = null;
 
   function updateCountdown(timerId) {
@@ -22,9 +24,17 @@ export default function TodoItem({
         $actualTimerSpan.innerText = `${timeLeft}`;
       }
     }
+    if (timeLeft <= 5) {
+      const $li = document.querySelector(`[data-parent='${item.id}']`);
+      $li.classList.add("active");
+    }
     if (timeLeft === 0 && elapsedTime >= item.time) {
+      console.log(item);
       clearInterval(timerId);
-      handleChangeOpenModal(item);
+      console.log(timerId);
+      setTimeout(() => {
+        handleChangeOpenModal(item);
+      }, 500);
     }
   }
 
@@ -65,6 +75,10 @@ export default function TodoItem({
       $todoItem.append($doneSpan);
       $doneSpan.innerText = item.time;
     }
+  };
+
+  this.resetTimer = () => {
+    clearInterval(this.timerId);
   };
 
   this.render();

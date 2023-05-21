@@ -110,6 +110,10 @@ main {
   padding: 8px 12px;
   border-radius: 5px;
 }
+.todo_item.active {
+  background: red;
+  color: white;
+}
 
 #button {
   display: flex;
