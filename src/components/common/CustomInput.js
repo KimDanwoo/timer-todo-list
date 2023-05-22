@@ -27,7 +27,7 @@ export default function CustomInput({
   $inner.append($inputContainer)
   $inputContainer.append($span)
   $input.name = name
-  $input.value = value
+  $input.value = !value ? '' : value
   $input.type = type
   $span.innerHTML = `${title}*`
   $input.placeholder = `${title}을 입력해주세요`
@@ -38,6 +38,20 @@ export default function CustomInput({
     if (type === 'text') {
       $input.focus()
     }
+  }
+
+  if (type === 'number') {
+    $input.addEventListener('keydown', (e) => {
+      var key = e.key
+
+      // 한글 Unicode 범위: AC00-D7A3
+      if (
+        (key >= '\uAC00' && key <= '\uD7A3') ||
+        (key >= '\u3131' && key <= '\u318E')
+      ) {
+        e.preventDefault()
+      }
+    })
   }
 
   $input.addEventListener('change', (e) => {

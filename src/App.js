@@ -5,6 +5,11 @@ import { getItem, setItem, removeItem } from './utils/storage.js'
 import Modal from './components/common/Modal.js'
 
 export default function App({ $target }) {
+  $target.style = 'max-height:100vh; overflow: auto;'
+  const $main = document.createElement('section')
+  const $todoWrap = document.createElement('div')
+  $todoWrap.classList.add('todo_wrap')
+  $main.id = 'page'
   this.state = getItem('store', {
     isOpenModal: false,
     sortType: '입력한 순',
@@ -14,21 +19,21 @@ export default function App({ $target }) {
     },
     todoList: [],
     doneTodoList: [],
-    checkedTodoList: [],
     timers: {},
     modalContents: [],
+    isChangeMode: false,
+    startChangeTime: 0,
   })
 
   this.setState = (nextState) => {
     this.state = nextState
     this.render()
   }
+  this.setFormState = (nextState) => {
+    this.state = nextState
+    this.formRender()
+  }
 
-  $target.style = 'max-height:100vh; overflow: auto;'
-  const $main = document.createElement('section')
-  $main.id = 'page'
-  const $todoWrap = document.createElement('div')
-  $todoWrap.classList.add('todo_wrap')
   const handleClickAddTodo = () => {
     const uuid = self.crypto.randomUUID()
     const newPayload = {
@@ -37,6 +42,7 @@ export default function App({ $target }) {
       id: uuid,
       isEnd: false,
       checked: false,
+      isChange: false,
     }
     this.state.timers[newPayload.id] = Date.now()
 
@@ -57,7 +63,7 @@ export default function App({ $target }) {
       ...this.state,
       input: { ...this.state.input, [name]: value },
     }
-    this.setState(newState)
+    this.setFormState(newState)
   }
 
   const handleClickFilterIndex = () => {
@@ -94,6 +100,7 @@ export default function App({ $target }) {
       todoList: [],
       doneTodoList: [...this.state.doneTodoList, ...filter],
     }
+    this.state.timers = {}
     this.setState(newState)
     setItem('store', this.state)
   }
@@ -103,6 +110,9 @@ export default function App({ $target }) {
       ...todo,
       isEnd: todo.checked,
     }))
+    for (let x of checkTodo) {
+      delete this.state.timers[x.id]
+    }
     const doneList = [
       ...this.state.doneTodoList,
       ...checkTodo.filter((item) => item.isEnd),
@@ -124,6 +134,7 @@ export default function App({ $target }) {
     }))
     this.state.todoList = map.filter((e) => !e.isEnd)
     this.state.doneTodoList = [...doneTodoList, ...map.filter((e) => e.isEnd)]
+    delete this.state.timers[todo.id]
     this.setState(this.state)
     setItem('store', this.state)
   }
@@ -145,6 +156,48 @@ export default function App({ $target }) {
     setItem('store', this.state)
   }
 
+  const handleClickRestoreTodo = (item) => {
+    const mapTodo = this.state.doneTodoList.map((todo) => ({
+      ...todo,
+      isEnd: item.id === todo.id ? false : todo.isEnd,
+      checked: item.id === todo.id ? false : todo.checked,
+      date: item.id === todo.id ? Date.now() : todo.date,
+    }))
+    this.state.todoList = [
+      ...this.state.todoList,
+      ...mapTodo.filter((item) => !item.isEnd),
+    ]
+    this.state.timers[item.id] = Date.now()
+    this.state.doneTodoList = mapTodo.filter((item) => item.isEnd)
+    this.setState(this.state)
+    setItem('store', this.state)
+  }
+
+  const handleClickChangeTodoItem = (item) => {
+    this.state.isChangeMode = true
+    const index = this.state.todoList.findIndex((todo) => todo.id === item.id)
+    this.state.todoList[index].isChange = true
+    this.state.startChangeTime = Date.now()
+    this.setState(this.state)
+  }
+
+  const handleChangeTodoItem = (item, { title, time }) => {
+    const index = this.state.todoList.findIndex((todo) => todo.id === item.id)
+    this.state.todoList[index] = {
+      ...this.state.todoList[index],
+      title,
+      time,
+      isChange: false,
+    }
+    this.state.isChangeMode = false
+    this.state.todoList.forEach((item) => {
+      const delayTime = Date.now() - this.state.startChangeTime
+      this.state.timers[item.id] = this.state.timers[item.id] + delayTime
+    })
+    this.setState(this.state)
+    setItem('store', this.state)
+  }
+
   const handleChangeOpenModal = (doneItem) => {
     this.state.isOpenModal = true
     const doneTodo = this.state.todoList.map((todo) => ({
@@ -159,7 +212,10 @@ export default function App({ $target }) {
     this.state.todoList = doneTodo.filter((item) => !item.isEnd)
     delete this.state.timers[doneItem.id]
     this.state.modalContents = [...this.state.modalContents, doneItem.title]
-    this.setState(this.state)
+    todoExpirationModal.setState({
+      isOpen: this.state.isOpenModal,
+      modalContents: this.state.modalContents,
+    })
     setItem('store', this.state)
   }
 
@@ -170,11 +226,13 @@ export default function App({ $target }) {
     setItem('store', this.state)
   }
 
-  const heading = new Heading({
+  new Heading({
     $target: $target,
     title: '밀리의 서재 사전 과제',
     size: 'h2',
   })
+
+  $target.appendChild($todoWrap)
 
   const todoExpirationModal = new Modal({
     $target: $target,
@@ -193,19 +251,20 @@ export default function App({ $target }) {
     handleClickCheckListDone,
     handleChangeOpenModal,
     handleClickDone,
+    handleClickChangeTodoItem,
+    handleChangeTodoItem,
   })
   const doneTodoContainer = new DoneTodoContainer({
     $target: $todoWrap,
     initialState: this.state,
+    handleClickRestoreTodo,
   })
 
+  this.formRender = () => {
+    todoListContainer.setFormState(this.state)
+  }
+
   this.render = () => {
-    heading.render()
-    $target.appendChild($todoWrap)
-    todoExpirationModal.setState({
-      isOpen: this.state.isOpenModal,
-      modalContents: this.state.modalContents,
-    })
     todoListContainer.setState(this.state)
     doneTodoContainer.setState(this.state)
   }

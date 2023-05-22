@@ -1,7 +1,11 @@
 import Heading from '../common/Heading'
 import TodoList from '../common/TodoList'
 
-export default function DoneTodoContainer({ $target, initialState }) {
+export default function DoneTodoContainer({
+  $target,
+  initialState,
+  handleClickRestoreTodo,
+}) {
   const $doneTodoContainer = document.createElement('section')
   $doneTodoContainer.classList.add('right')
   this.state = initialState
@@ -21,8 +25,10 @@ export default function DoneTodoContainer({ $target, initialState }) {
     $target: $doneTodoContainer,
     initialState: {
       todoList: this.state.todoList.filter(({ isEnd }) => isEnd),
+      isChangeMode: this.state.isChangeMode,
     },
     className: 'done',
+    handleClickRestoreTodo,
   })
 
   this.render = () => {
@@ -31,8 +37,8 @@ export default function DoneTodoContainer({ $target, initialState }) {
     todoList.setState({
       todoList: this.state.doneTodoList,
       timers: this.state.timers,
-      items: [],
-      todoItems: {},
+      handleClickRestoreTodo,
+      isChangeMode: this.state.isChangeMode,
     })
     $target.append($doneTodoContainer)
   }

@@ -14,6 +14,8 @@ export default function TodoListContainer({
   handleClickCheckListDone,
   handleChangeOpenModal,
   handleClickDone,
+  handleClickChangeTodoItem,
+  handleChangeTodoItem,
 }) {
   this.state = initialState
 
@@ -21,6 +23,12 @@ export default function TodoListContainer({
     this.state = nextState
     this.render()
   }
+
+  this.setFormState = (nextState) => {
+    this.state = nextState
+    this.formRender()
+  }
+
   const $createContainer = document.createElement('div')
   const $createTodo = document.createElement('section')
   $createTodo.append($createContainer)
@@ -46,18 +54,36 @@ export default function TodoListContainer({
     $target: $createTodo,
     initialState: {
       todoList: this.state.todoList.filter(({ isEnd }) => !isEnd),
-      checkedTodoList: this.state.checkedTodoList,
       timers: this.state.timers,
+      isChangeMode: this.state.isChangeMode,
     },
     className: 'unfinished',
     handleClickCheckList,
     handleChangeOpenModal,
     handleClickDone,
+    handleClickChangeTodoItem,
+    handleChangeTodoItem,
   })
 
-  this.render = () => {
-    $target.append($createTodo)
+  const filteredTodoList = () => {
+    const { sortType, todoList } = this.state
+    let filteredList = todoList
+    if (sortType === '남은 시간 순') {
+      filteredList = filteredList.sort((a, b) => a.time - b.time)
+    }
+    if (sortType === '입력한 순') {
+      filteredList = filteredList.sort((a, b) => a.date - b.date)
+    }
+    return filteredList
+  }
+
+  this.formRender = () => {
     todoForm.setState(this.state)
+  }
+
+  this.render = () => {
+    const filtered = filteredTodoList()
+    $target.append($createTodo)
     const isDisabled = this.state.todoList.length
       ? !this.state.todoList.filter((item) => item.checked).length
       : true
@@ -66,13 +92,12 @@ export default function TodoListContainer({
       disabled: isDisabled,
     })
     todoList.setState({
-      todoList: this.state.todoList.filter(({ isEnd }) => !isEnd),
-      checkedTodoList: this.state.checkedTodoList,
+      todoList: filtered.filter(({ isEnd }) => !isEnd),
       timers: this.state.timers,
-      items: [],
-      todoItems: {},
+      isChangeMode: this.state.isChangeMode,
     })
   }
 
+  this.formRender()
   this.render()
 }

@@ -37,11 +37,7 @@ export default function Modal({ $target, handleChangeCloseModal }) {
     $target.appendChild($modal)
   }
   this.render()
-
-  this.toggleOpenModal = () =>
-    this.state.isOpen ? this.closeModal() : this.openModal()
-
-  this.openModal = () => this.setState({ ...this.state, isOpen: true })
+  
   this.closeModal = () => this.setState({ ...this.state, isOpen: false })
 
   const $button = $modal.querySelector('#btnClose')
