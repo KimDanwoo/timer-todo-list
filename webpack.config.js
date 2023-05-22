@@ -11,8 +11,9 @@ module.exports = (env, argv) => {
       path: path.resolve(__dirname, 'dist'),
       filename: isProduction ? 'main.js' : 'main.js',
       library: 'MyLibrary',
-      libraryTarget: 'umd',
+      libraryTarget: isProduction ? 'umd' : 'var',
       globalObject: 'this',
+      umdNamedDefine: true,
     },
     plugins: [
       new HtmlWebpackPlugin({

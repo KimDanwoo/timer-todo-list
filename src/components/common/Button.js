@@ -6,6 +6,7 @@ export default function Button({
     disabled,
   },
   type = 'button',
+  title,
   onClick = () => {},
   disabled,
 }) {
@@ -18,6 +19,8 @@ export default function Button({
   const $buttonContainer = document.createElement('button')
   $buttonContainer.id = 'button'
   $buttonContainer.type = type
+  $buttonContainer.setAttribute('aria-label', title)
+  $buttonContainer.setAttribute('title', title)
 
   this.render = () => {
     const { text, sortType } = this.state

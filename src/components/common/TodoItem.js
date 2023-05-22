@@ -68,10 +68,17 @@ export default function TodoItem({
     const $changeBtn = document.createElement('button')
     $button.setAttribute('type', 'button')
     $changeBtn.setAttribute('type', 'button')
+    $button.setAttribute('aria-label', '항목 종료')
+    $changeBtn.setAttribute('aria-label', '항목 수정')
+    $button.setAttribute('title', '항목 종료')
+    $changeBtn.setAttribute('title', '항목 수정')
     $button.innerText = '종료'
     $changeBtn.innerText = '수정'
     if (isChangeItem) {
       $changeBtn.disabled = true
+      $changeBtn.setAttribute('aria-pressed', false)
+    } else {
+      $changeBtn.setAttribute('aria-pressed', true)
     }
     $todoItem.append($timerSpan)
     $todoItem.append($changeBtn)
@@ -91,6 +98,8 @@ export default function TodoItem({
     const $title = document.createElement('p')
     $title.innerText = todo.title
     const $restoreBtn = document.createElement('button')
+    $restoreBtn.setAttribute('aria-label', '항목 복원')
+    $restoreBtn.setAttribute('title', '항목 복원')
     $restoreBtn.innerText = '복원'
     $todoItem.append($title)
     $todoItem.append($doneSpan)

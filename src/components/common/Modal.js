@@ -9,16 +9,14 @@ export default function Modal({ $target, handleChangeCloseModal }) {
   }
   $modal.innerHTML = /*html*/ `
   <div class="modal_content" aria-hidden>
-    <div class="modal_header">
-      <h4></h4>
-    </div>
+    <div class="modal_header"></div>
     <div class="modal_body">
     ${this.state.modalContents
       .map((content) => `[${content}] 아이템이 종료 되었습니다.`)
       .join('')}
     </div>
     <div class="modal_footer">
-    <button id="btnClose" type="button">확인</button>
+    <button id="btnClose" type="button" title="모달 닫기" aria-label="모달 닫기">확인</button>
     </div>
   </div>
   `
@@ -37,7 +35,7 @@ export default function Modal({ $target, handleChangeCloseModal }) {
     $target.appendChild($modal)
   }
   this.render()
-  
+
   this.closeModal = () => this.setState({ ...this.state, isOpen: false })
 
   const $button = $modal.querySelector('#btnClose')

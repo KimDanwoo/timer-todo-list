@@ -216,6 +216,7 @@ export default function App({ $target }) {
       isOpen: this.state.isOpenModal,
       modalContents: this.state.modalContents,
     })
+    this.setState(this.state)
     setItem('store', this.state)
   }
 

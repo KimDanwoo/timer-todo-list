@@ -33,12 +33,14 @@ export default function FilterControl({
     $target: $leftBox,
     initialState: { text: '입력한 순', sortType: this.state.sortType },
     type: 'button',
+    title: '입력한 순서로 정렬',
     onClick: handleClickFilterIndex,
   })
   const sortTimeButton = new Button({
     $target: $leftBox,
     initialState: { text: '남은 시간 순', sortType: this.state.sortType },
     type: 'button',
+    title: '남은 시간 순서로 정렬',
     onClick: handleClickFilterLimitTime,
   })
 
@@ -46,6 +48,7 @@ export default function FilterControl({
     $target: $rightBox,
     initialState: { text: '전체 종료' },
     type: 'button',
+    title: '할 일 목록 전체 종료',
     onClick: handleClickAllDone,
   })
 
@@ -53,6 +56,7 @@ export default function FilterControl({
     $target: $rightBox,
     initialState: { text: '선택 종료' },
     type: 'button',
+    title: '체크된 항목 종료',
     onClick: handleClickCheckListDone,
   })
 

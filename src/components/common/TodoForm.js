@@ -54,6 +54,7 @@ export default function TodoForm({
     $target: $form,
     initialState: { text: '추가' },
     type: 'submit',
+    title: '할일 및 종료시간 추가',
     onClick: handleSubmit,
   })
 
