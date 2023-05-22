@@ -1,6 +1,6 @@
-import App from "./App.js";
-import "./style.css";
+import App from './App.js'
+import './style.css'
 
-const $target = document.querySelector("#root");
+const $target = document.querySelector('#root')
 
-new App({ $target });
+new App({ $target })
