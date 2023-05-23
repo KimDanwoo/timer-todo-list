@@ -200,9 +200,11 @@ export default function App({ $target }) {
 
   const handleChangeOpenModal = (doneItem) => {
     this.state.isOpenModal = true
+    this.state.isChangeMode = false
     const doneTodo = this.state.todoList.map((todo) => ({
       ...todo,
       isEnd: doneItem.id === todo.id,
+      isChange: false,
     }))
 
     this.state.doneTodoList = [

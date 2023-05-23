@@ -51,7 +51,11 @@ export default function TodoItem({
     const $timerSpan = document.createElement('span')
     $timerSpan.setAttribute('data-time', todo.time)
     $timerSpan.setAttribute('data-id', todo.id)
-    $timerSpan.innerText = `${value ?? todo.time}초`
+    if (value < 1 || todo.item < 1) {
+      $timerSpan.innerText = `${1}초`
+    } else {
+      $timerSpan.innerText = `${value ?? todo.time}초`
+    }
     const $checkbox = todo.isEnd ? '' : document.createElement('input')
     if ($checkbox) {
       $checkbox.setAttribute('type', 'checkbox')
