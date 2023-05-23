@@ -26,8 +26,10 @@ export default function Button({
     const { text, sortType } = this.state
     if (this.state.disabled) {
       $buttonContainer.disabled = 'disabled'
+      $buttonContainer.setAttribute('aria-pressed', false)
     } else {
       $buttonContainer.disabled = false
+      $buttonContainer.setAttribute('aria-pressed', true)
     }
 
     $buttonContainer.innerHTML = /*html*/ `

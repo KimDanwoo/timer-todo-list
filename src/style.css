@@ -82,6 +82,7 @@ main {
 .form_container form {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   /* border: 1px solid rgb(39, 39, 39); */
   border-radius: 5px;
   padding: 18px;
@@ -122,6 +123,11 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.unfinished label {
+  display: flex;
+}
+
 .unfinished .todo_item p {
   width: 250px;
   text-align: center;
@@ -129,6 +135,11 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.done .todo_item {
+  background: #d7d7d7;
+}
+
 .done .todo_item p {
   width: 64%;
   text-align: center;
@@ -153,7 +164,7 @@ main {
 }
 
 .todo_item.active {
-  background: red;
+  background: rgb(255, 40, 40);
   color: white;
 }
 
@@ -192,6 +203,7 @@ button > span {
 button.active {
   background-color: #fef08c;
   color: #242424;
+  border: none;
 }
 
 button:disabled {
@@ -224,6 +236,7 @@ button:disabled:hover {
 .input input {
   outline: none;
   border: none;
+  height: 18px;
 }
 
 .input input::placeholder {

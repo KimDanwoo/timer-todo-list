@@ -56,7 +56,10 @@ export default function TodoItem({
     } else {
       $timerSpan.innerText = `${value ?? todo.time}초`
     }
-    const $checkbox = todo.isEnd ? '' : document.createElement('input')
+    const $label = document.createElement('label')
+    $label.setAttribute('for', todo.id)
+    const $checkbox = document.createElement('input')
+    $checkbox.id = todo.id
     if ($checkbox) {
       $checkbox.setAttribute('type', 'checkbox')
       $checkbox.classList.add('todo-checkbox')
@@ -67,7 +70,8 @@ export default function TodoItem({
     }
     const $title = document.createElement('p')
     $title.innerText = todo.title
-    $todoItem.append($checkbox, $title)
+    $label.append($title, $timerSpan)
+    $todoItem.append($checkbox)
     const $button = document.createElement('button')
     const $changeBtn = document.createElement('button')
     $button.setAttribute('type', 'button')
@@ -84,7 +88,8 @@ export default function TodoItem({
     } else {
       $changeBtn.setAttribute('aria-pressed', true)
     }
-    $todoItem.append($timerSpan)
+    // $label.append($timerSpan)
+    $todoItem.append($label)
     $todoItem.append($changeBtn)
     $todoItem.append($button)
     $button.addEventListener('click', (e) => {

@@ -87,9 +87,12 @@ export default function TodoListContainer({
     const isDisabled = this.state.todoList.length
       ? !this.state.todoList.filter((item) => item.checked).length
       : true
+
+    const allDoneDisabled = !this.state.todoList.length ? true : false
     filterControl.setState({
       sortType: this.state.sortType,
       disabled: isDisabled,
+      allDoneDisabled: allDoneDisabled,
     })
     todoList.setState({
       todoList: filtered.filter(({ isEnd }) => !isEnd),

@@ -43,8 +43,6 @@ export default function CustomInput({
   if (type === 'number') {
     $input.addEventListener('keydown', (e) => {
       var key = e.key
-
-      // 한글 Unicode 범위: AC00-D7A3
       if (
         (key >= '\uAC00' && key <= '\uD7A3') ||
         (key >= '\u3131' && key <= '\u318E')

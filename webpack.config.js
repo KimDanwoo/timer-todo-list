@@ -8,9 +8,8 @@ module.exports = (env, { mode }) => {
     mode: mode,
     entry: './src/main.js',
     output: {
-      filename: 'main.js',
+      filename: '[name].js',
       path: path.resolve(__dirname, 'dist'),
-      filename: isProduction ? 'main.js' : 'main.js',
       library: 'MyLibrary',
       libraryTarget: isProduction ? 'umd' : 'var',
       globalObject: 'this',

@@ -44,7 +44,7 @@ export default function FilterControl({
     onClick: handleClickFilterLimitTime,
   })
 
-  new Button({
+  const allDoneDisabled = new Button({
     $target: $rightBox,
     initialState: { text: '전체 종료' },
     type: 'button',
@@ -71,6 +71,11 @@ export default function FilterControl({
     sortTimeButton.setState({
       text: '남은 시간 순',
       sortType: this.state.sortType,
+    })
+
+    allDoneDisabled.setState({
+      text: '전체 종료',
+      disabled: this.state.allDoneDisabled,
     })
     selectDoneTodo.setState({
       text: '선택 종료',
