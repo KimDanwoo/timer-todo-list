@@ -157,7 +157,7 @@ main {
   color: white;
 }
 
-#button {
+.button_container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -303,7 +303,7 @@ article.done {
     padding: 20px;
   }
 
-  #button {
+  .button_container {
     font-size: 12px;
     margin: 0px 2px;
   }

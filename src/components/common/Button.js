@@ -17,7 +17,7 @@ export default function Button({
     this.render()
   }
   const $buttonContainer = document.createElement('button')
-  $buttonContainer.id = 'button'
+  $buttonContainer.classList.add('button_container')
   $buttonContainer.type = type
   $buttonContainer.setAttribute('aria-label', title)
   $buttonContainer.setAttribute('title', title)

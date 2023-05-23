@@ -104,7 +104,9 @@ export default function TodoList({
       className === 'done' ? '할일을 마무리해보세요!' : `할일을 만들어보세요!`
     $todoList.classList.add('no_list')
     $todoList.innerHTML = `
-    <h4 class="no_title">${nullClass}</h4 >
+    <li class="no_title">
+    <h4>${nullClass}</h4 >
+    </li>
   `
   }
 
