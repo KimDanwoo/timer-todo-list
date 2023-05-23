@@ -2,10 +2,10 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
-module.exports = (env, argv) => {
-  const isProduction = argv.mode === 'production'
+module.exports = (env, { mode }) => {
+  const isProduction = mode === 'production'
   return {
-    mode: argv.mode,
+    mode: mode,
     entry: './src/main.js',
     output: {
       filename: 'main.js',
@@ -20,7 +20,7 @@ module.exports = (env, argv) => {
       new HtmlWebpackPlugin({
         template: './index.html',
       }),
-      new CleanWebpackPlugin(),
+      ...(isProduction ? [new CleanWebpackPlugin()] : []),
     ],
     module: {
       rules: [
