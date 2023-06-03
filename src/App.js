@@ -231,7 +231,7 @@ export default function App({ $target }) {
 
   new Heading({
     $target: $target,
-    title: '밀리의 서재 사전 과제',
+    title: 'Timer Todo List',
     size: 'h2',
   })
 
