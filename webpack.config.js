@@ -4,7 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = (env, { mode }) => {
   const isProduction = mode === 'production'
-  return {  
+  return {
     mode: mode,
     entry: './src/main.js',
     output: {

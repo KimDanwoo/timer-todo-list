@@ -1,8 +1,4 @@
-export default function Heading({
-  $target,
-  title = '밀리의 서재 사전 과제',
-  size,
-}) {
+export default function Heading({ $target, title, size }) {
   const $heading = document.createElement(size)
   $heading.textContent = title
 
